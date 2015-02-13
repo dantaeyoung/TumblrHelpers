@@ -107,12 +107,12 @@ tAgg.retrieveAllFromTumblr = function (tumblr_name, callback, offset, count, pos
 
 tAgg.maybeLoadFirstPage = function() {
 	
-	if(_.keys(window.blogsLoadedFirstPage).length == window.NumberOfBlogs) {
-		if(!("loaded" in window.blogsLoadedFirstPage)) {
-			window.allPostsList = _.sortBy(window.allPostsList, "timestamp").reverse();
+	if(_.keys(tAgg.blogsLoadedFirstPage).length == tAgg.NumberOfBlogs) {
+		if(!("loaded" in tAgg.blogsLoadedFirstPage)) {
+			tAgg.allPostsList = _.sortBy(tAgg.allPostsList, "timestamp").reverse();
 			console.log("writing while loading!")
 			tAgg.writePosts(20);
-			window.blogsLoadedFirstPage['loaded'] = true;
+			tAgg.blogsLoadedFirstPage['loaded'] = true;
 		}
 	}
 }
