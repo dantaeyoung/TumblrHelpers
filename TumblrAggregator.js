@@ -17,11 +17,11 @@ tAgg.writePost = function(item) {
 	if(item.type == "photo") {
 		$.each(item.photos, function(i, photo) {
 			//console.log(photo.original_size.url);
-			contentString = '<div class=img_container><img src=' + photo.original_size.url + '></div>';
+			contentString += '<div class=img_container><img src=' + photo.original_size.url + '></div>';
 		});
 	}
 	if(item.type == "video") {
-			contentString = '<div class=embed_container>' + _.max(item.player, 'width').embed_code + '</div>';
+			contentString += '<div class=embed_container>' + _.max(item.player, 'width').embed_code + '</div>';
 	}
 	
 	var tagString = "";
