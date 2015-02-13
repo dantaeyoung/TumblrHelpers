@@ -46,6 +46,9 @@ tAgg.writePost = function(item) {
 	 </div>\
    </div>\
    <div class="permalink">\
+	 <div class="origBlog">\
+	   From: <a href="http://' + item.blog_name + '.tumblr.com">' + item.blog_name + '</a>\
+	 </div>\
 	 <div class="tags">\
 	' + tagString + '\
 	 <br>\
