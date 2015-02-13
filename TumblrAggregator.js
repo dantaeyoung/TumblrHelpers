@@ -9,6 +9,57 @@ tAgg.tumblrAPI = "https://api.tumblr.com/v2/blog/";
 tAgg.myName = 'adr2-sp15';
 
 
+
+tAgg.writePost = function(item) {
+	
+	if(item !== "undefined") {
+	var contentString = "";
+	if(item.type == "photo") {
+		$.each(item.photos, function(i, photo) {
+			//console.log(photo.original_size.url);
+			contentString = '<div class=img_container><img src=' + photo.original_size.url + '></div>';
+		});
+	}
+	if(item.type == "video") {
+			contentString = '<div class=embed_container>' + _.max(item.player, 'width').embed_code + '</div>';
+	}
+	
+	var tagString = "";
+	if(item.tags) {
+		tagString += "Tags: ";
+		$.each(item.tags, function(i, tag) {
+			tagString +=  '<a class="' + tag + '" href="http://adr2-sp15.tumblr.com/tagged/' + tag + '">• ' + tag + '</a>&nbsp;';
+		});
+	}
+
+	
+	$("#all_posts").append('\
+<div class="postwrapper">\
+ <div class="post ' + item.type + '"><div class="realpost">\
+   ' + contentString + '\
+ </div></div>\
+ <div class="sidebar">\
+   <div class="caption">\
+	 <div class="caption-text">\
+		' + item.caption + '\
+	 </div>\
+   </div>\
+   <div class="permalink">\
+	 <div class="tags">\
+	' + tagString + '\
+	 <br>\
+	 </div>\
+	 <a href="https://www.tumblr.com/reblog/' + item.id + '/' + item.reblog_key + '">&#8634; Reblog</a><br />\
+   </div>\
+ </div>\
+</div>');
+					
+	}
+	
+}
+
+
+
 tAgg.retrieveAllFromTumblr = function (tumblr_name, callback, offset, count, posts) {
 	
 
@@ -30,8 +81,8 @@ tAgg.retrieveAllFromTumblr = function (tumblr_name, callback, offset, count, pos
 	}
 
 	$.getJSON(apiPath, function(data) {
-		if(datAgg.response.posts) {
-			$.each(datAgg.response.posts, function(i, item) {
+		if(data.response.posts) {
+			$.each(data.response.posts, function(i, item) {
 				 tAgg.allPostsList.push(item);
 				
 			});
@@ -40,7 +91,7 @@ tAgg.retrieveAllFromTumblr = function (tumblr_name, callback, offset, count, pos
 		tAgg.blogsLoadedFirstPage[tumblr_name] = true;
 		tAgg.maybeLoadFirstPage();
 		
-		if (datAgg.response.posts && datAgg.response.posts.length == 20) {
+		if (data.response.posts && data.response.posts.length == 20) {
 			tAgg.retrieveAllFromTumblr(tumblr_name, callback, offset + 20, count + 20, posts).then(function() {
 				def.resolve(posts);
 			});
