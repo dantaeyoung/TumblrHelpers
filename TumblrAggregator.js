@@ -1,6 +1,7 @@
 
 /* this aggregates multiple tumblr blogs together into one. example: http://adr2-sp5.tumblr.com. */
 /* dan@dantaeyoung.com Feb 2015 */
+/* https://github.com/provolot/TumblrHelpers/ */
 
 var tAgg = {};
 
